@@ -11,3 +11,8 @@ Concept of Kotlin Coroutines
 - Increase availability of platform thread by suspending execution
     - when a coroutine calls a `suspend` function, it does not block the platform thread but suspends execution, allowing other coroutines to run on the same thread
     - resumption happens when the suspended function completes and scheduled again
+
+
+[CoroutineScope](src/main/kotlin/coroutine_scope/CoroutineScope.kt)
+
+- Provide and manage CoroutineContext
