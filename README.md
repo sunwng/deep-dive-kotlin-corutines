@@ -16,3 +16,17 @@ Concept of Kotlin Coroutines
 [CoroutineScope](src/main/kotlin/coroutine_scope/CoroutineScope.kt)
 
 - Provide and manage CoroutineContext
+
+[CoroutineContext](src/main/kotlin/coroutine_context/CoroutineContext.kt)
+
+- Interface that defines the execution environment for coroutines
+- Key-Value set of elements (`Element` is a inner class of `CoroutineContext`)
+
+[Brief Overview of implementations of CoroutineContext](src/main/kotlin/implementations_of_coroutine_context/ImplementationsOfCoroutineContext.kt)
+
+- CoroutineDispatcher
+    - determines the execution thread (platform thread) for coroutines
+    - responsible for scheduling coroutine execution and managing thread allocation
+- Job
+    - represents a cancellable unit of work in a coroutine
+    - manages coroutine’s lifecycle
