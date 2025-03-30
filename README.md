@@ -30,3 +30,16 @@ Concept of Kotlin Coroutines
 - Job
     - represents a cancellable unit of work in a coroutine
     - manages coroutine’s lifecycle
+
+Important Keywords
+
+- [`intercept`](src/main/kotlin/intercept/Intercept.kt)
+  - a behavior of linking a continuation to a dispatcher via a interceptor (`ContinuationInterceptor`)
+    - this allows the dispatcher to control how and where the continuation resumes
+  - `unintercepted` ⇒ not linked yet
+  - `intercepted` ⇒ linked, ready to be dispatched
+- `dispatch`
+  - a behavior of submitting a continuation (`runnable`) into the dispatcher’s task queue (e.g. `LimitedDispatcher`)
+  - `undispatched` ⇒ not submitted
+  - `dispatched` ⇒ submitted (scheduled)
+    - after dispatched, CoroutineScheduler assigns a task in dispatcher’s task queue to a specific worker thread
