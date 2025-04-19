@@ -43,3 +43,22 @@ Important Keywords
   - `undispatched` ⇒ not submitted
   - `dispatched` ⇒ submitted (scheduled)
     - after dispatched, CoroutineScheduler assigns a task in dispatcher’s task queue to a specific worker thread
+
+[Dispatcher & Scheduler & Worker](src/main/kotlin/schduler/CoroutineScheduler.kt)
+
+- Dispatcher
+  - Singleton instance
+  - dispatches coroutine tasks to Scheduler (`CoroutineScheduler`)
+  - defines dispatch policy (e.g. `limitedParallelism`)
+- Scheduler
+  - actually acts as singleton (shares one instance during runtime)
+  - manages OS-level worker threads (its own pool)
+  - lazily creates workers up to `corePoolSize` / `maxPoolSize`
+  - has two global queues
+    - `globalCpuQueue` (for CPU-bound tasks)
+    - `globalBlockingQueue` (for IO-blocking tasks)
+  - implements work stealing & thread parking/unparking
+- Worker
+  - is a OS thread managed by Scheduler
+  - has local task queue
+  - can steal tasks from global task queue of Scheduler
