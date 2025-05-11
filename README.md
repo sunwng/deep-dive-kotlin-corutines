@@ -33,6 +33,10 @@ Concept of Kotlin Coroutines
 
 Important Keywords
 
+- [`continuation`](src/main/kotlin/continuation/Continuation.kt) [[reference](https://arc.net/l/quote/phmkgujd)]
+  - a suspended state of coroutine
+    - including its call stack, local variables, and the point where to resume execution
+    - this concept is known as “continuation passing style”
 - [`intercept`](src/main/kotlin/intercept/Intercept.kt)
   - a behavior of linking a continuation to a dispatcher via a interceptor (`ContinuationInterceptor`)
     - this allows the dispatcher to control how and where the continuation resumes
@@ -62,3 +66,25 @@ Important Keywords
   - is a OS thread managed by Scheduler
   - has local task queue
   - can steal tasks from global task queue of Scheduler
+
+[Handling Graceful Shutdown](src/main/kotlin/custom_thread_pool/CustomThreadPool.kt)
+
+- Needs to use a custom thread pool to enable graceful shutdown
+  - in this case, use Spring’s one ([`org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor`)](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html)
+- Convert the executor into a coroutine dispatcher using extend function of kotlin (`asCoroutineDispatcher()`)
+
+[Coroutine Builders](src/main/kotlin/builders/Builders.kt)
+
+- `withContext`
+  - switch to another coroutine context (typically to another Dispatcher)
+  - suspends the current coroutine until the given block completes
+- `runBlocking`
+  - blocks current thread
+- `launch`
+  - fire-and-forget strategy
+  - executes a coroutine asynchronously (executing thread depends on its dispatcher)
+  - returns a `Job`, but not a result
+- `async`
+  - asynchronously executes a coroutine (executing thread depends on its dispatcher)
+  - returns deferred result as a type of `Deferred`
+  - use `await()` to get the result
